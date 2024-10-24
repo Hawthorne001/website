@@ -58,12 +58,12 @@ To enable X509 client certificate authentication to the kubelet's HTTPS endpoint
 <!--
 * start the kubelet with the `--client-ca-file` flag, providing a CA bundle to verify client certificates with
 * start the apiserver with `--kubelet-client-certificate` and `--kubelet-client-key` flags
-* see the [apiserver authentication documentation](/docs/reference/access-authn-authz/authentication/#x509-client-certs) for more details
+* see the [apiserver authentication documentation](/docs/reference/access-authn-authz/authentication/#x509-client-certificates) for more details
 -->
 * 带 `--client-ca-file` 标志启动 kubelet，提供一个 CA 证书包以供验证客户端证书
 * 带 `--kubelet-client-certificate` 和 `--kubelet-client-key` 标志启动 API 服务器
 * 有关更多详细信息，请参见
-  [API 服务器身份验证文档](/zh-cn/docs/reference/access-authn-authz/authentication/#x509-client-certs)
+  [API 服务器身份验证文档](/zh-cn/docs/reference/access-authn-authz/authentication/#x509-client-certificates)
 
 <!--
 To enable API bearer tokens (including service account tokens) to be used to authenticate to the kubelet's HTTPS endpoint:
@@ -148,7 +148,14 @@ The resource and subresource is determined from the incoming request's path:
 资源和子资源是根据传入请求的路径确定的：
 
 <!--
-Kubelet API  | resource | subresource
+Kubelet API         | resource | subresource
+--------------------|----------|------------
+/stats/\*           | nodes    | stats
+/metrics/\*         | nodes    | metrics
+/logs/\*            | nodes    | log
+/spec/\*            | nodes    | spec
+/checkpoint/\*      | nodes    | checkpoint
+*all others*        | nodes    | proxy
 -->
 Kubelet API  | 资源 | 子资源
 -------------|----------|------------
@@ -156,6 +163,7 @@ Kubelet API  | 资源 | 子资源
 /metrics/\*   | nodes    | metrics
 /logs/\*      | nodes    | log
 /spec/\*      | nodes    | spec
+/checkpoint/\* | nodes   | checkpoint
 **其它所有**  | nodes    | proxy
 
 <!--
